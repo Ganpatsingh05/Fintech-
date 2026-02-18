@@ -3,20 +3,11 @@
 // ==============================
 // Combines SummaryCards, Charts, Filters, TransactionList,
 // TransactionForm (modal), and a floating add button.
-// Uses Firebase Firestore for persistent data storage.
+// Uses Firebase Realtime Database for persistent data storage.
 
 import { useState, useMemo, useEffect } from "react";
 import { toast } from "react-toastify";
-import {
-  collection,
-  addDoc,
-  updateDoc,
-  deleteDoc,
-  doc,
-  onSnapshot,
-  query,
-  orderBy,
-} from "firebase/firestore";
+import { ref, push, update, remove, onValue } from "firebase/database";
 import { db } from "../firebase/firebaseConfig";
 
 // Components
@@ -42,15 +33,17 @@ export default function Dashboard() {
     sortBy: "date-desc",
   });
 
-  // ---- Realtime Firestore listener ----
+  // ---- Realtime Database listener ----
   useEffect(() => {
-    const q = query(collection(db, "transactions"), orderBy("date", "desc"));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const data = snapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
-      setTransactions(data);
+    const transactionsRef = ref(db, "transactions");
+    const unsubscribe = onValue(transactionsRef, (snapshot) => {
+      const data = snapshot.val();
+      const list = data
+        ? Object.entries(data).map(([id, val]) => ({ id, ...val }))
+        : [];
+      // Sort by date descending by default
+      list.sort((a, b) => new Date(b.date) - new Date(a.date));
+      setTransactions(list);
       setLoading(false);
     });
     return () => unsubscribe();
@@ -59,7 +52,8 @@ export default function Dashboard() {
   // ---- Add Transaction ----
   const handleAdd = async (formData) => {
     try {
-      await addDoc(collection(db, "transactions"), {
+      const transactionsRef = ref(db, "transactions");
+      await push(transactionsRef, {
         ...formData,
         createdAt: new Date().toISOString(),
       });
@@ -79,8 +73,8 @@ export default function Dashboard() {
 
   const handleUpdate = async (formData) => {
     try {
-      const docRef = doc(db, "transactions", editData.id);
-      await updateDoc(docRef, formData);
+      const transactionRef = ref(db, `transactions/${editData.id}`);
+      await update(transactionRef, formData);
       toast.success("Transaction updated!");
       setFormOpen(false);
       setEditData(null);
@@ -94,7 +88,8 @@ export default function Dashboard() {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this transaction?")) return;
     try {
-      await deleteDoc(doc(db, "transactions", id));
+      const transactionRef = ref(db, `transactions/${id}`);
+      await remove(transactionRef);
       toast.success("Transaction deleted!");
     } catch (err) {
       toast.error("Failed to delete transaction");

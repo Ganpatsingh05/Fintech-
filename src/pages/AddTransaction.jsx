@@ -2,12 +2,12 @@
 // AddTransaction Page — Standalone Form Page
 // ==============================
 // Full-page version of the transaction form for the
-// /add-transaction route. Saves transaction to Firestore then navigates back.
+// /add-transaction route. Saves transaction to Realtime Database then navigates back.
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { collection, addDoc } from "firebase/firestore";
+import { ref, push } from "firebase/database";
 import { db } from "../firebase/firebaseConfig";
 import DashboardLayout from "../components/Layout/DashboardLayout";
 import { FiArrowLeft, FiDollarSign, FiTag, FiCalendar, FiFileText } from "react-icons/fi";
@@ -58,7 +58,8 @@ export default function AddTransaction() {
     }
     setLoading(true);
     try {
-      await addDoc(collection(db, "transactions"), {
+      const transactionsRef = ref(db, "transactions");
+      await push(transactionsRef, {
         ...formData,
         amount: parseFloat(formData.amount),
         createdAt: new Date().toISOString(),
