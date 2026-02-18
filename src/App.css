@@ -1,115 +1,77 @@
 /* ==============================
-   App.css — App-Level Layout Styles
-   ==============================
-   Styles that apply to the root layout of the app:
-   the #root container, page wrappers, and shared
-   utility classes used across multiple components.
-*/
+   App.css — App-Level Layout & Utilities
+   ============================== */
 
-/* ----- Root Container ----- */
-/* The #root div wraps the entire React app */
 #root {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* ----- Page Wrapper ----- */
-/* Used around each page's content to center it and add padding */
 .page-wrapper {
-  max-width: 1200px;
+  max-width: 1240px;
   width: 100%;
   margin: 0 auto;
   padding: 1.5rem;
 }
 
-/* ----- Card Component (reusable) ----- */
-/* A generic card style used for summary cards, transaction items, etc. */
+/* Glass card base */
 .card {
-  background-color: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
-  padding: 1.25rem;
+  background: var(--card-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
   box-shadow: var(--shadow);
   transition: var(--transition);
 }
 .card:hover {
   box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
+  transform: translateY(-3px);
 }
 
-/* ----- Flex Utility Classes ----- */
-.flex {
-  display: flex;
-}
-.flex-between {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.flex-wrap {
-  flex-wrap: wrap;
-}
-.gap-1 {
-  gap: 0.5rem;
-}
-.gap-2 {
-  gap: 1rem;
-}
-.gap-3 {
-  gap: 1.5rem;
+/* Flex utilities */
+.flex { display: flex; }
+.flex-between { display: flex; justify-content: space-between; align-items: center; }
+.flex-center { display: flex; justify-content: center; align-items: center; }
+.flex-wrap { flex-wrap: wrap; }
+.gap-1 { gap: 0.5rem; }
+.gap-2 { gap: 1rem; }
+.gap-3 { gap: 1.5rem; }
+
+/* Text utilities */
+.text-success { color: var(--success); }
+.text-danger { color: var(--danger); }
+.text-muted { color: var(--text-secondary); }
+.text-center { text-align: center; }
+
+/* Gradient text utility */
+.gradient-text {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-/* ----- Text Utility Classes ----- */
-.text-success {
-  color: var(--success);
-}
-.text-danger {
-  color: var(--danger);
-}
-.text-muted {
-  color: var(--text-secondary);
-}
-.text-center {
-  text-align: center;
-}
-
-/* ----- Button Variants ----- */
-.btn-success {
-  background-color: var(--success);
-}
-.btn-success:hover {
-  background-color: #15803d;
-}
-.btn-danger {
-  background-color: var(--danger);
-}
-.btn-danger:hover {
-  background-color: #b91c1c;
-}
+/* Button variants */
+.btn-success { background: linear-gradient(135deg, var(--success), #059669); }
+.btn-success:hover { box-shadow: 0 8px 25px var(--success-glow); }
+.btn-danger { background: linear-gradient(135deg, var(--danger), #dc2626); }
+.btn-danger:hover { box-shadow: 0 8px 25px var(--danger-glow); }
 .btn-outline {
-  background-color: transparent;
-  border: 1px solid var(--primary);
+  background: transparent;
+  border: 2px solid var(--primary);
   color: var(--primary);
 }
 .btn-outline:hover {
-  background-color: var(--primary);
-  color: #ffffff;
+  background: var(--primary);
+  color: #fff;
 }
+.btn-outline::after { display: none; }
 
-/* ----- Responsive Grid (for Summary Cards) ----- */
-.grid-3 {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-}
+/* Grid utilities */
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
 @media (max-width: 768px) {
-  .grid-3 {
-    grid-template-columns: 1fr;  /* Stack on mobile */
-  }
+  .grid-3 { grid-template-columns: 1fr; }
 }

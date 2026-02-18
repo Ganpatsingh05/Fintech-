@@ -1,186 +1,208 @@
 /* ==============================
-   AddTransaction.css
+   AddTransaction.css — Premium Add Form
    ============================== */
 
 .add-transaction-page {
   max-width: 640px;
   margin: 0 auto;
+  animation: fadeInUp 0.5s ease both;
 }
 
+/* Back button */
 .back-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.5rem 1rem;
+  gap: 0.5rem;
+  padding: 0.6rem 1.1rem;
   border: none;
-  border-radius: 10px;
-  background: transparent;
+  border-radius: 12px;
+  background: var(--card-bg);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
   color: var(--text-secondary);
-  font-weight: 500;
+  font-weight: 600;
   font-size: 0.9rem;
   cursor: pointer;
   transition: var(--transition);
   margin-bottom: 1.5rem;
 }
-
+.back-btn::after { display: none; }
 .back-btn:hover {
   color: var(--primary);
-  background: rgba(79, 70, 229, 0.08);
-  transform: none;
-  box-shadow: none;
+  border-color: var(--primary);
+  transform: translateX(-4px);
+  box-shadow: 0 4px 15px var(--primary-glow);
 }
 
+/* Form card */
 .add-form-card {
   background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 20px;
-  padding: 2rem;
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative gradient stripe */
+.add-form-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), #8b5cf6, #ec4899, #f59e0b);
+  background-size: 300% 100%;
+  animation: shimmer 3s linear infinite;
+}
+
+/* Decorative corner orb */
+.add-form-card::after {
+  content: "";
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--primary-glow), transparent 70%);
+  top: -80px;
+  right: -80px;
+  opacity: 0.4;
+  pointer-events: none;
 }
 
 .add-form-card h1 {
-  font-size: 1.5rem;
-  margin-bottom: 0.25rem;
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin-bottom: 0.3rem;
+  letter-spacing: -0.03em;
 }
-
 .form-subtitle {
   color: var(--text-secondary);
-  font-size: 0.9rem;
-  margin-bottom: 1.5rem;
+  font-size: 0.92rem;
+  margin-bottom: 1.75rem;
 }
 
 .add-form {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.35rem;
 }
 
-/* Type Toggle Full Width */
+/* Type toggle buttons */
 .type-toggle-full {
   display: flex;
-  gap: 0.75rem;
+  gap: 0.85rem;
 }
-
 .type-btn-full {
   flex: 1;
-  padding: 1rem;
+  padding: 1.1rem;
   border: 2px solid var(--border-color);
-  border-radius: 14px;
+  border-radius: 16px;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: var(--transition);
   background: transparent;
   color: var(--text-secondary);
+  position: relative;
+  overflow: hidden;
 }
-
-.type-btn-full:hover {
-  transform: none;
-  box-shadow: none;
-}
-
+.type-btn-full::after { display: none; }
+.type-btn-full:hover { transform: none; box-shadow: none; }
 .type-btn-full.active.income {
   border-color: #10b981;
-  background: rgba(16, 185, 129, 0.08);
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(52, 211, 153, 0.04));
   color: #10b981;
+  box-shadow: 0 4px 20px var(--success-glow);
 }
-
 .type-btn-full.active.expense {
   border-color: #ef4444;
-  background: rgba(239, 68, 68, 0.08);
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.08), rgba(248, 113, 113, 0.04));
   color: #ef4444;
+  box-shadow: 0 4px 20px var(--danger-glow);
 }
 
-/* Form Grid */
+/* Form grid */
 .form-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
+  gap: 1.15rem;
 }
 
+/* Form fields */
 .add-form .form-group {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.45rem;
 }
-
 .add-form .form-group label {
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 0.82rem;
+  font-weight: 700;
   color: var(--text-secondary);
   display: flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.4rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
-
 .add-form .form-group input,
 .add-form .form-group select,
 .add-form .form-group textarea {
-  padding: 0.75rem 1rem;
+  padding: 0.8rem 1.1rem;
   border: 2px solid var(--border-color);
-  border-radius: 12px;
+  border-radius: 14px;
   font-size: 0.95rem;
   background: var(--card-bg);
   color: var(--text-primary);
   transition: var(--transition);
 }
-
 .add-form .form-group input:focus,
 .add-form .form-group select:focus,
 .add-form .form-group textarea:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+  box-shadow: 0 0 0 4px var(--primary-glow);
 }
+.add-form textarea { resize: none; }
 
-.add-form textarea {
-  resize: none;
-}
-
-/* Submit */
+/* Submit button */
 .submit-btn-full {
-  padding: 0.9rem;
+  padding: 1rem;
   border: none;
-  border-radius: 14px;
-  font-size: 1rem;
-  font-weight: 600;
+  border-radius: 16px;
+  font-size: 1.05rem;
+  font-weight: 700;
   color: #fff;
   cursor: pointer;
   transition: var(--transition);
-  margin-top: 0.5rem;
+  margin-top: 0.75rem;
+  letter-spacing: 0.02em;
 }
-
 .submit-btn-full.income {
   background: linear-gradient(135deg, #10b981, #059669);
 }
-
 .submit-btn-full.income:hover {
-  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
+  box-shadow: 0 8px 30px var(--success-glow);
+  transform: translateY(-2px);
 }
-
 .submit-btn-full.expense {
   background: linear-gradient(135deg, #ef4444, #dc2626);
 }
-
 .submit-btn-full.expense:hover {
-  box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+  box-shadow: 0 8px 30px var(--danger-glow);
+  transform: translateY(-2px);
 }
-
 .submit-btn-full:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
+  transform: none;
 }
 
-/* Responsive */
 @media (max-width: 600px) {
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .type-toggle-full {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .add-form-card {
-    padding: 1.5rem;
-  }
+  .form-grid { grid-template-columns: 1fr; }
+  .type-toggle-full { flex-direction: column; gap: 0.65rem; }
+  .add-form-card { padding: 1.75rem; }
 }

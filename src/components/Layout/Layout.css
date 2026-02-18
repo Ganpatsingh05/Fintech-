@@ -1,5 +1,5 @@
 /* ==============================
-   Layout.css
+   Layout.css — Premium Layout
    ============================== */
 
 .dashboard-layout {
@@ -10,6 +10,7 @@
 
 .main-content {
   flex: 1;
-  padding-top: 1rem;
-  padding-bottom: 6rem; /* Space for FAB */
+  padding-top: 1.5rem;
+  padding-bottom: 6rem;
+  animation: fadeInUp 0.5s ease both;
 }

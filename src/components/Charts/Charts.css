@@ -1,58 +1,82 @@
 /* ==============================
-   Charts.css
+   Charts.css — Premium Glass Charts
    ============================== */
 
 .charts-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1.25rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .chart-card {
   background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 16px;
-  padding: 1.5rem;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 1.75rem;
   transition: var(--transition);
+  animation: fadeInUp 0.5s ease both;
+  animation-delay: 0.35s;
+  position: relative;
+  overflow: hidden;
+}
+
+.chart-card::before {
+  content: "";
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  background: radial-gradient(circle, var(--primary-glow), transparent 70%);
+  top: -50px;
+  right: -50px;
+  opacity: 0.3;
+  pointer-events: none;
 }
 
 .chart-card:hover {
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-3px);
 }
 
 .chart-title {
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 1.05rem;
+  font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: 1rem;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.chart-title::before {
+  content: "";
+  width: 4px;
+  height: 18px;
+  background: linear-gradient(180deg, var(--primary), var(--accent));
+  border-radius: 4px;
 }
 
-/* Custom Tooltip */
 .chart-tooltip {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 10px;
-  padding: 0.75rem 1rem;
-  box-shadow: var(--shadow-md);
+  background: var(--card-bg-solid) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border) !important;
+  border-radius: 14px !important;
+  padding: 0.85rem 1.15rem !important;
+  box-shadow: var(--shadow-lg) !important;
 }
-
 .tooltip-label {
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-primary) !important;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.35rem;
   font-size: 0.85rem;
 }
-
 .chart-tooltip p {
   font-size: 0.85rem;
-  margin: 0.15rem 0;
-  font-weight: 500;
+  margin: 0.2rem 0;
+  font-weight: 600;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
-  .charts-container {
-    grid-template-columns: 1fr;
-  }
+  .charts-container { grid-template-columns: 1fr; }
 }
