@@ -1,0 +1,122 @@
+/* ==============================
+   SummaryCards.css
+   ============================== */
+
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.summary-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.summary-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  border-radius: 4px 0 0 4px;
+}
+
+.summary-card.balance::before {
+  background: linear-gradient(180deg, var(--primary), #7c3aed);
+}
+
+.summary-card.income::before {
+  background: linear-gradient(180deg, #10b981, #059669);
+}
+
+.summary-card.expense::before {
+  background: linear-gradient(180deg, #ef4444, #dc2626);
+}
+
+.summary-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.summary-icon-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.balance-icon {
+  background: rgba(79, 70, 229, 0.1);
+  color: var(--primary);
+}
+
+.income-icon {
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.expense-icon {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+}
+
+.summary-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.summary-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.summary-amount {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.summary-amount.positive {
+  color: #10b981;
+}
+
+.summary-amount.negative {
+  color: #ef4444;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .summary-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-card {
+    padding: 1.25rem;
+  }
+
+  .summary-amount {
+    font-size: 1.25rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .summary-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
