@@ -3,16 +3,7 @@
    ============================== */
 
 .add-transaction-page {
-  max-width: 580px;
-  margin: 0 auto;
   animation: fadeInUp 0.5s ease both;
-  background: var(--card-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-lg);
-  padding: 2rem;
-  box-shadow: var(--shadow);
 }
 
 /* Back button */
@@ -41,15 +32,8 @@
   box-shadow: 0 4px 15px var(--primary-glow);
 }
 
-/* Form card */
+/* Form card — no extra glass, just subtle inner card */
 .add-form-card {
-  background: var(--card-bg);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--radius-lg);
-  padding: 2.5rem;
-  box-shadow: var(--shadow-md);
   position: relative;
   overflow: hidden;
 }
@@ -65,38 +49,26 @@
   background: linear-gradient(90deg, var(--primary), #8b5cf6, #ec4899, #f59e0b);
   background-size: 300% 100%;
   animation: shimmer 3s linear infinite;
-}
-
-/* Decorative corner orb */
-.add-form-card::after {
-  content: "";
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  background: radial-gradient(circle, var(--primary-glow), transparent 70%);
-  top: -80px;
-  right: -80px;
-  opacity: 0.4;
-  pointer-events: none;
+  border-radius: 4px;
 }
 
 .add-form-card h1 {
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   font-weight: 800;
   margin-bottom: 0.3rem;
+  margin-top: 0.75rem;
   letter-spacing: -0.03em;
 }
 .form-subtitle {
   color: var(--text-secondary);
   font-size: 0.92rem;
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.5rem;
 }
 
 .add-form {
   display: flex;
   flex-direction: column;
-  gap: 1.35rem;
+  gap: 1.25rem;
 }
 
 /* Type toggle buttons */
@@ -106,9 +78,9 @@
 }
 .type-btn-full {
   flex: 1;
-  padding: 1.1rem;
+  padding: 1rem;
   border: 2px solid var(--border-color);
-  border-radius: 16px;
+  border-radius: 14px;
   font-size: 1rem;
   font-weight: 700;
   cursor: pointer;
@@ -159,13 +131,15 @@
 .add-form .form-group input,
 .add-form .form-group select,
 .add-form .form-group textarea {
-  padding: 0.8rem 1.1rem;
+  width: 100%;
+  padding: 0.8rem 1rem;
   border: 2px solid var(--border-color);
-  border-radius: 14px;
+  border-radius: 12px;
   font-size: 0.95rem;
   background: var(--card-bg);
   color: var(--text-primary);
   transition: var(--transition);
+  box-sizing: border-box;
 }
 .add-form .form-group input:focus,
 .add-form .form-group select:focus,
@@ -177,15 +151,15 @@
 
 /* Submit button */
 .submit-btn-full {
-  padding: 1rem;
+  padding: 0.95rem;
   border: none;
-  border-radius: 16px;
+  border-radius: 14px;
   font-size: 1.05rem;
   font-weight: 700;
   color: #fff;
   cursor: pointer;
   transition: var(--transition);
-  margin-top: 0.75rem;
+  margin-top: 0.5rem;
   letter-spacing: 0.02em;
 }
 .submit-btn-full.income {
@@ -206,6 +180,11 @@
   opacity: 0.5;
   cursor: not-allowed;
   transform: none;
+}
+
+@media (max-width: 600px) {
+  .form-grid { grid-template-columns: 1fr; }
+  .type-toggle-full { flex-direction: column; }
 }
 
 @media (max-width: 600px) {

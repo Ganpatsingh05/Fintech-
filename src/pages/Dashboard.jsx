@@ -9,6 +9,7 @@ import { useState, useMemo, useEffect } from "react";
 import { toast } from "react-toastify";
 import { ref, push, update, remove, onValue } from "firebase/database";
 import { db } from "../firebase/firebaseConfig";
+import { useAuth } from "../context/AuthContext";
 
 // Components
 import DashboardLayout from "../components/Layout/DashboardLayout";
@@ -18,10 +19,11 @@ import Filters from "../components/Filters/Filters";
 import TransactionList from "../components/TransactionList/TransactionList";
 import TransactionForm from "../components/TransactionForm/TransactionForm";
 
-import { FiPlus } from "react-icons/fi";
+import { FiPlus, FiBarChart2 } from "react-icons/fi";
 import "./Dashboard.css";
 
 export default function Dashboard() {
+  const { currentUser } = useAuth();
   const [transactions, setTransactions] = useState([]);
   const [formOpen, setFormOpen] = useState(false);
   const [editData, setEditData] = useState(null);
@@ -33,9 +35,13 @@ export default function Dashboard() {
     sortBy: "date-desc",
   });
 
+  // User-specific database path
+  const userPath = `transactions/${currentUser?.uid}`;
+
   // ---- Realtime Database listener ----
   useEffect(() => {
-    const transactionsRef = ref(db, "transactions");
+    if (!currentUser) return;
+    const transactionsRef = ref(db, userPath);
     const unsubscribe = onValue(transactionsRef, (snapshot) => {
       const data = snapshot.val();
       const list = data
@@ -47,12 +53,12 @@ export default function Dashboard() {
       setLoading(false);
     });
     return () => unsubscribe();
-  }, []);
+  }, [currentUser, userPath]);
 
   // ---- Add Transaction ----
   const handleAdd = async (formData) => {
     try {
-      const transactionsRef = ref(db, "transactions");
+      const transactionsRef = ref(db, userPath);
       await push(transactionsRef, {
         ...formData,
         createdAt: new Date().toISOString(),
@@ -73,7 +79,7 @@ export default function Dashboard() {
 
   const handleUpdate = async (formData) => {
     try {
-      const transactionRef = ref(db, `transactions/${editData.id}`);
+      const transactionRef = ref(db, `${userPath}/${editData.id}`);
       await update(transactionRef, formData);
       toast.success("Transaction updated!");
       setFormOpen(false);
@@ -88,7 +94,7 @@ export default function Dashboard() {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this transaction?")) return;
     try {
-      const transactionRef = ref(db, `transactions/${id}`);
+      const transactionRef = ref(db, `${userPath}/${id}`);
       await remove(transactionRef);
       toast.success("Transaction deleted!");
     } catch (err) {
@@ -136,14 +142,41 @@ export default function Dashboard() {
     return result;
   }, [transactions, filters]);
 
+  const floatingContent = !loading && (
+    <>
+      {/* Floating Add Button */}
+      <button
+        className="fab"
+        onClick={() => {
+          setEditData(null);
+          setFormOpen(true);
+        }}
+        title="Add Transaction"
+      >
+        <FiPlus />
+      </button>
+
+      {/* Transaction Form Modal */}
+      <TransactionForm
+        isOpen={formOpen}
+        onClose={() => {
+          setFormOpen(false);
+          setEditData(null);
+        }}
+        onSubmit={editData ? handleUpdate : handleAdd}
+        editData={editData}
+      />
+    </>
+  );
+
   return (
-    <DashboardLayout>
+    <DashboardLayout floatingContent={floatingContent}>
       <div className="dashboard-page">
         {/* Page Header */}
         <div className="dashboard-header">
           <div>
             <h1 className="dashboard-title">
-              Finance Dashboard 💰
+              Finance Dashboard <FiBarChart2 className="title-icon" />
             </h1>
             <p className="dashboard-subtitle">Here's your financial overview</p>
           </div>
@@ -175,29 +208,6 @@ export default function Dashboard() {
               transactions={filteredTransactions}
               onEdit={handleEdit}
               onDelete={handleDelete}
-            />
-
-            {/* Floating Add Button */}
-            <button
-              className="fab"
-              onClick={() => {
-                setEditData(null);
-                setFormOpen(true);
-              }}
-              title="Add Transaction"
-            >
-              <FiPlus />
-            </button>
-
-            {/* Transaction Form Modal */}
-            <TransactionForm
-              isOpen={formOpen}
-              onClose={() => {
-                setFormOpen(false);
-                setEditData(null);
-              }}
-              onSubmit={editData ? handleUpdate : handleAdd}
-              editData={editData}
             />
           </>
         )}

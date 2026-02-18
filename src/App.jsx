@@ -9,32 +9,57 @@ import "react-toastify/dist/ReactToastify.css";
 
 // Context Providers
 import { ThemeProvider } from "./context/ThemeContext";
+import { AuthProvider } from "./context/AuthContext";
+
+// Auth
+import PrivateRoute from "./components/Auth/PrivateRoute";
 
 // Pages
 import Dashboard from "./pages/Dashboard";
 import AddTransaction from "./pages/AddTransaction";
+import Login from "./pages/Login";
 
 function App() {
   return (
-    <ThemeProvider>
-      {/* Toast Notifications */}
-      <ToastContainer
-        position="top-right"
-        autoClose={3000}
-        hideProgressBar={false}
-        theme="colored"
-      />
+    <AuthProvider>
+      <ThemeProvider>
+        {/* Toast Notifications */}
+        <ToastContainer
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          theme="colored"
+        />
 
-      {/* App Routes */}
-      <Routes>
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/add-transaction" element={<AddTransaction />} />
+        {/* App Routes */}
+        <Routes>
+          {/* Public Routes */}
+          <Route path="/login" element={<Login />} />
 
-        {/* Redirect root to dashboard */}
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
-        <Route path="*" element={<Navigate to="/dashboard" replace />} />
-      </Routes>
-    </ThemeProvider>
+          {/* Protected Routes */}
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/add-transaction"
+            element={
+              <PrivateRoute>
+                <AddTransaction />
+              </PrivateRoute>
+            }
+          />
+
+          {/* Redirect root to dashboard */}
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        </Routes>
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
 

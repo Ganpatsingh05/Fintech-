@@ -9,10 +9,15 @@
 }
 
 .page-wrapper {
-  max-width: 1060px;
-  width: 100%;
+  max-width: 960px;
+  width: 88%;
   margin: 0 auto;
-  padding: 1.5rem 2.5rem;
+}
+
+@media (max-width: 768px) {
+  .page-wrapper {
+    width: 94%;
+  }
 }
 
 /* Glass card base */

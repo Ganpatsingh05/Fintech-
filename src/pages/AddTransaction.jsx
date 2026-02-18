@@ -9,8 +9,9 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { ref, push } from "firebase/database";
 import { db } from "../firebase/firebaseConfig";
+import { useAuth } from "../context/AuthContext";
 import DashboardLayout from "../components/Layout/DashboardLayout";
-import { FiArrowLeft, FiDollarSign, FiTag, FiCalendar, FiFileText } from "react-icons/fi";
+import { FiArrowLeft, FiDollarSign, FiTag, FiCalendar, FiFileText, FiTrendingUp, FiTrendingDown } from "react-icons/fi";
 import "./AddTransaction.css";
 
 const CATEGORIES = {
@@ -31,6 +32,7 @@ const CATEGORIES = {
 
 export default function AddTransaction() {
   const navigate = useNavigate();
+  const { currentUser } = useAuth();
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
@@ -58,7 +60,7 @@ export default function AddTransaction() {
     }
     setLoading(true);
     try {
-      const transactionsRef = ref(db, "transactions");
+      const transactionsRef = ref(db, `transactions/${currentUser.uid}`);
       await push(transactionsRef, {
         ...formData,
         amount: parseFloat(formData.amount),
@@ -93,14 +95,14 @@ export default function AddTransaction() {
                 className={`type-btn-full ${formData.type === "income" ? "active income" : ""}`}
                 onClick={() => setFormData((p) => ({ ...p, type: "income", category: "" }))}
               >
-                💰 Income
+                <FiTrendingUp /> Income
               </button>
               <button
                 type="button"
                 className={`type-btn-full ${formData.type === "expense" ? "active expense" : ""}`}
                 onClick={() => setFormData((p) => ({ ...p, type: "expense", category: "" }))}
               >
-                💸 Expense
+                <FiTrendingDown /> Expense
               </button>
             </div>
 

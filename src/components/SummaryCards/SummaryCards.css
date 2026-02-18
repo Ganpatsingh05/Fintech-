@@ -118,9 +118,12 @@
 .summary-amount.negative { color: #ef4444; }
 
 @media (max-width: 768px) {
-  .summary-cards { grid-template-columns: 1fr; }
-  .summary-card { padding: 1.25rem; }
-  .summary-amount { font-size: 1.35rem; }
+  .summary-cards { grid-template-columns: 1fr; gap: 0.75rem; }
+  .summary-card { padding: 1rem 1.15rem; border-radius: 14px; }
+  .summary-icon-wrapper { width: 44px; height: 44px; border-radius: 12px; font-size: 1.25rem; }
+  .summary-label { font-size: 0.75rem; }
+  .summary-amount { font-size: 1.3rem; }
+  .summary-card::after { width: 80px; height: 80px; right: -20px; bottom: -30px; }
 }
 @media (min-width: 769px) and (max-width: 1024px) {
   .summary-cards { grid-template-columns: repeat(3, 1fr); }
