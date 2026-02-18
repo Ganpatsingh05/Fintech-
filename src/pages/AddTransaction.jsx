@@ -2,11 +2,13 @@
 // AddTransaction Page — Standalone Form Page
 // ==============================
 // Full-page version of the transaction form for the
-// /add-transaction route. Adds transaction then navigates back.
+// /add-transaction route. Saves transaction to Firestore then navigates back.
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { collection, addDoc } from "firebase/firestore";
+import { db } from "../firebase/firebaseConfig";
 import DashboardLayout from "../components/Layout/DashboardLayout";
 import { FiArrowLeft, FiDollarSign, FiTag, FiCalendar, FiFileText } from "react-icons/fi";
 import "./AddTransaction.css";
@@ -48,16 +50,27 @@ export default function AddTransaction() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.title || !formData.amount || !formData.category) {
       toast.error("Please fill in all required fields");
       return;
     }
     setLoading(true);
-    // Local-only for now: just show success and redirect
-    toast.success("Transaction added!");
-    navigate("/dashboard");
+    try {
+      await addDoc(collection(db, "transactions"), {
+        ...formData,
+        amount: parseFloat(formData.amount),
+        createdAt: new Date().toISOString(),
+      });
+      toast.success("Transaction added!");
+      navigate("/dashboard");
+    } catch (err) {
+      toast.error("Failed to add transaction");
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
