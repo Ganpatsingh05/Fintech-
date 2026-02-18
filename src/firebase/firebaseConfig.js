@@ -8,13 +8,13 @@ import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDPlaceholder",
+  apiKey: "AIzaSyDummy",
   authDomain: "fintrack-8ab35.firebaseapp.com",
-  databaseURL: "https://fintrack-8ab35-default-rtdb.firebaseio.com",
+  databaseURL: "https://fintrack-8ab35-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "fintrack-8ab35",
   storageBucket: "fintrack-8ab35.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID",
+  messagingSenderId: "000000000000",
+  appId: "1:000000000000:web:0000000000000000",
 };
 
 // Initialize Firebase
