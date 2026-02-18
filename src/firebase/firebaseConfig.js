@@ -9,14 +9,14 @@ import { getDatabase } from "firebase/database";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
+  apiKey: "AIzaSyBWZliIKDx-37YGZ0AGAY48cLEGgXwthDE",
+  authDomain: "fintrack-8ab35.firebaseapp.com",
+  databaseURL: "https://fintrack-8ab35-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "fintrack-8ab35",
+  storageBucket: "fintrack-8ab35.firebasestorage.app",
+  messagingSenderId: "723929733457",
+  appId: "1:723929733457:web:095a874e28b3c8e646db70",
+  measurementId: "G-H4TLDQWK45",
 };
 
 // Initialize Firebase
