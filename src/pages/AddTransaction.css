@@ -3,9 +3,16 @@
    ============================== */
 
 .add-transaction-page {
-  max-width: 640px;
+  max-width: 580px;
   margin: 0 auto;
   animation: fadeInUp 0.5s ease both;
+  background: var(--card-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow);
 }
 
 /* Back button */

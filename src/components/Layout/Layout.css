@@ -10,7 +10,42 @@
 
 .main-content {
   flex: 1;
-  padding-top: 1.5rem;
+  padding-top: 2rem;
   padding-bottom: 6rem;
   animation: fadeInUp 0.5s ease both;
+  position: relative;
+}
+
+/* Decorative side rails */
+.main-content::before,
+.main-content::after {
+  content: "";
+  position: fixed;
+  top: 68px;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    var(--primary-glow) 15%,
+    var(--primary) 50%,
+    var(--primary-glow) 85%,
+    transparent 100%
+  );
+  opacity: 0.18;
+  pointer-events: none;
+  z-index: 1;
+}
+.main-content::before {
+  left: calc((100vw - 1060px) / 2 - 20px);
+}
+.main-content::after {
+  right: calc((100vw - 1060px) / 2 - 20px);
+}
+
+@media (max-width: 1140px) {
+  .main-content::before,
+  .main-content::after {
+    display: none;
+  }
 }
