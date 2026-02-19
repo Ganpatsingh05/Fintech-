@@ -1,0 +1,32 @@
+/* ==============================
+   Footer.css — Minimal Footer
+   ============================== */
+
+.app-footer {
+  text-align: center;
+  padding: 1.25rem 1rem;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  border-top: 1px solid var(--glass-border);
+  margin-top: 2rem;
+}
+
+.app-footer p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+.footer-heart {
+  color: #c8574f;
+  font-size: 0.85rem;
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}

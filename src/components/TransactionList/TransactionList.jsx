@@ -1,123 +1,65 @@
 // ==============================
-// TransactionList — Displays All Transactions
+// TransactionList — Clean Row Layout
 // ==============================
-// Shows transactions as styled cards with edit/delete actions,
-// category icons, and color-coded amounts.
-
 import {
-  FiEdit2,
-  FiTrash2,
-  FiShoppingCart,
-  FiTruck,
-  FiHome,
-  FiHeart,
-  FiBook,
-  FiFilm,
-  FiZap,
-  FiGlobe,
-  FiBriefcase,
-  FiGift,
-  FiDollarSign,
-  FiCoffee,
-  FiTrendingUp,
-  FiMoreHorizontal,
+  FiEdit2, FiTrash2, FiShoppingCart, FiTruck, FiHome, FiHeart,
+  FiBook, FiFilm, FiZap, FiGlobe, FiBriefcase, FiGift,
+  FiDollarSign, FiCoffee, FiTrendingUp, FiMoreHorizontal,
 } from "react-icons/fi";
 import "./TransactionList.css";
 
-// Category icon mapping
 const CATEGORY_ICONS = {
-  "Food & Dining": FiCoffee,
-  Transport: FiTruck,
-  Shopping: FiShoppingCart,
-  "Bills & Utilities": FiZap,
-  Entertainment: FiFilm,
-  Health: FiHeart,
-  Education: FiBook,
-  Rent: FiHome,
-  Travel: FiGlobe,
-  Salary: FiBriefcase,
-  Freelance: FiBriefcase,
-  Investments: FiTrendingUp,
-  Business: FiBriefcase,
-  Gifts: FiGift,
-  Other: FiMoreHorizontal,
+  "Food & Dining": FiCoffee, Transport: FiTruck, Shopping: FiShoppingCart,
+  "Bills & Utilities": FiZap, Entertainment: FiFilm, Health: FiHeart,
+  Education: FiBook, Rent: FiHome, Travel: FiGlobe, Salary: FiBriefcase,
+  Freelance: FiBriefcase, Investments: FiTrendingUp, Business: FiBriefcase,
+  Gifts: FiGift, Other: FiMoreHorizontal,
 };
 
 export default function TransactionList({ transactions, onEdit, onDelete }) {
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat("en-IN", {
-      style: "currency",
-      currency: "INR",
-      minimumFractionDigits: 0,
-    }).format(amount);
-  };
+  const fmt = (amount) =>
+    new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", minimumFractionDigits: 0 }).format(amount);
 
-  const formatDate = (dateStr) => {
-    const date = new Date(dateStr);
-    return date.toLocaleDateString("en-IN", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    });
-  };
+  const fmtDate = (d) =>
+    new Date(d).toLocaleDateString("en-IN", { day: "numeric", month: "short" });
 
-  const getCategoryIcon = (category) => {
-    const Icon = CATEGORY_ICONS[category] || FiDollarSign;
-    return <Icon />;
-  };
+  const Icon = (cat) => CATEGORY_ICONS[cat] || FiDollarSign;
 
-  if (transactions.length === 0) {
+  if (!transactions.length) {
     return (
-      <div className="empty-state">
-        <div className="empty-icon">📊</div>
+      <div className="tl-empty">
+        <span className="tl-empty-ico">📊</span>
         <h3>No transactions yet</h3>
-        <p>Start by adding your first income or expense</p>
+        <p>Add your first income or expense to get started</p>
       </div>
     );
   }
 
   return (
-    <div className="transaction-list">
-      {transactions.map((t) => (
-        <div key={t.id} className={`transaction-card ${t.type}`}>
-          <div className={`transaction-icon ${t.type}`}>
-            {getCategoryIcon(t.category)}
-          </div>
-
-          <div className="transaction-details">
-            <h4 className="transaction-title">{t.title}</h4>
-            <div className="transaction-meta">
-              <span className="transaction-category">{t.category}</span>
-              <span className="transaction-date">{formatDate(t.date)}</span>
+    <div className="tl-list">
+      {transactions.map((t) => {
+        const CatIcon = Icon(t.category);
+        return (
+          <div key={t.id} className="tl-row">
+            <div className={`tl-ico ${t.type}`}><CatIcon /></div>
+            <div className="tl-info">
+              <span className="tl-title">{t.title}</span>
+              <span className="tl-meta">
+                <span className="tl-cat">{t.category}</span>
+                <span className="tl-dot">·</span>
+                <span>{fmtDate(t.date)}</span>
+              </span>
             </div>
-            {t.note && <p className="transaction-note">{t.note}</p>}
-          </div>
-
-          <div className="transaction-right">
-            <span className={`transaction-amount ${t.type}`}>
-              {t.type === "income" ? "+" : "-"}
-              {formatCurrency(t.amount)}
+            <span className={`tl-amt ${t.type}`}>
+              {t.type === "income" ? "+" : "−"}{fmt(t.amount)}
             </span>
-
-            <div className="transaction-actions">
-              <button
-                className="action-btn edit"
-                onClick={() => onEdit(t)}
-                title="Edit"
-              >
-                <FiEdit2 />
-              </button>
-              <button
-                className="action-btn delete"
-                onClick={() => onDelete(t.id)}
-                title="Delete"
-              >
-                <FiTrash2 />
-              </button>
+            <div className="tl-actions">
+              <button className="tl-btn edit" onClick={() => onEdit(t)} title="Edit"><FiEdit2 /></button>
+              <button className="tl-btn del" onClick={() => onDelete(t.id)} title="Delete"><FiTrash2 /></button>
             </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

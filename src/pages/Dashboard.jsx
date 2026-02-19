@@ -7,7 +7,7 @@
 
 import { useState, useMemo, useEffect } from "react";
 import { toast } from "react-toastify";
-import { ref, push, update, remove, onValue } from "firebase/database";
+import { collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot, query, orderBy } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
 import { useAuth } from "../context/AuthContext";
 
@@ -19,7 +19,8 @@ import Filters from "../components/Filters/Filters";
 import TransactionList from "../components/TransactionList/TransactionList";
 import TransactionForm from "../components/TransactionForm/TransactionForm";
 
-import { FiPlus, FiBarChart2 } from "react-icons/fi";
+import { FiPlus, FiBarChart2, FiDatabase } from "react-icons/fi";
+import { seedMockData } from "../utils/seedMockData";
 import "./Dashboard.css";
 
 export default function Dashboard() {
@@ -35,31 +36,30 @@ export default function Dashboard() {
     sortBy: "date-desc",
   });
 
-  // User-specific database path
-  const userPath = `transactions/${currentUser?.uid}`;
+  // User-specific Firestore collection
+  const userCollectionPath = `users/${currentUser?.uid}/transactions`;
 
-  // ---- Realtime Database listener ----
+  // ---- Firestore real-time listener ----
   useEffect(() => {
     if (!currentUser) return;
-    const transactionsRef = ref(db, userPath);
-    const unsubscribe = onValue(transactionsRef, (snapshot) => {
-      const data = snapshot.val();
-      const list = data
-        ? Object.entries(data).map(([id, val]) => ({ id, ...val }))
-        : [];
-      // Sort by date descending by default
+    const q = query(
+      collection(db, userCollectionPath),
+      orderBy("createdAt", "desc")
+    );
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      // Sort by date descending
       list.sort((a, b) => new Date(b.date) - new Date(a.date));
       setTransactions(list);
       setLoading(false);
     });
     return () => unsubscribe();
-  }, [currentUser, userPath]);
+  }, [currentUser, userCollectionPath]);
 
   // ---- Add Transaction ----
   const handleAdd = async (formData) => {
     try {
-      const transactionsRef = ref(db, userPath);
-      await push(transactionsRef, {
+      await addDoc(collection(db, userCollectionPath), {
         ...formData,
         createdAt: new Date().toISOString(),
       });
@@ -79,8 +79,8 @@ export default function Dashboard() {
 
   const handleUpdate = async (formData) => {
     try {
-      const transactionRef = ref(db, `${userPath}/${editData.id}`);
-      await update(transactionRef, formData);
+      const transactionRef = doc(db, userCollectionPath, editData.id);
+      await updateDoc(transactionRef, formData);
       toast.success("Transaction updated!");
       setFormOpen(false);
       setEditData(null);
@@ -94,12 +94,29 @@ export default function Dashboard() {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this transaction?")) return;
     try {
-      const transactionRef = ref(db, `${userPath}/${id}`);
-      await remove(transactionRef);
+      const transactionRef = doc(db, userCollectionPath, id);
+      await deleteDoc(transactionRef);
       toast.success("Transaction deleted!");
     } catch (err) {
       toast.error("Failed to delete transaction");
       console.error(err);
+    }
+  };
+
+  // ---- Seed Mock Data ----
+  const [seeding, setSeeding] = useState(false);
+  const handleSeedData = async () => {
+    if (!currentUser) return;
+    if (!window.confirm("This will add 25 sample transactions. Continue?")) return;
+    setSeeding(true);
+    try {
+      const count = await seedMockData(db, currentUser.uid);
+      toast.success(`Added ${count} mock transactions!`);
+    } catch (err) {
+      toast.error("Failed to seed mock data");
+      console.error(err);
+    } finally {
+      setSeeding(false);
     }
   };
 
@@ -172,14 +189,36 @@ export default function Dashboard() {
   return (
     <DashboardLayout floatingContent={floatingContent}>
       <div className="dashboard-page">
-        {/* Page Header */}
+        <div className="dash-decor">
+          <span className="dash-orbit o1" />
+          <span className="dash-orbit o2" />
+          <span className="dash-orbit o3" />
+          <span className="dash-dot-grid dg1" />
+          <span className="dash-dot-grid dg2" />
+          <span className="dash-shape hex" />
+          <span className="dash-shape tri" />
+          <span className="dash-shape circle-fill" />
+          <span className="dash-shape plus-mark" />
+          <span className="dash-curve" />
+          <span className="dash-wave" />
+        </div>
+
         <div className="dashboard-header">
           <div>
             <h1 className="dashboard-title">
-              Finance Dashboard <FiBarChart2 className="title-icon" />
+              BudgetBuddy <FiBarChart2 className="title-icon" />
             </h1>
-            <p className="dashboard-subtitle">Here's your financial overview</p>
+            <p className="dashboard-subtitle">Your smart companion for smarter spending</p>
           </div>
+          {transactions.length === 0 && !loading && (
+            <button
+              className="seed-btn"
+              onClick={handleSeedData}
+              disabled={seeding}
+            >
+              <FiDatabase /> {seeding ? "Seeding..." : "Add Sample Data"}
+            </button>
+          )}
         </div>
 
         {loading ? (
@@ -196,19 +235,27 @@ export default function Dashboard() {
 
             {/* Filters */}
             <div className="section-header">
-              <h2>Transactions</h2>
+              <h2>Recent Transactions</h2>
               <span className="transaction-count">
-                {filteredTransactions.length} {filteredTransactions.length === 1 ? "entry" : "entries"}
+                {Math.min(filteredTransactions.length, 5)} of {filteredTransactions.length} {filteredTransactions.length === 1 ? "entry" : "entries"}
               </span>
             </div>
             <Filters filters={filters} setFilters={setFilters} />
 
-            {/* Transaction List */}
+            {/* Recent Transaction List (max 5) */}
             <TransactionList
-              transactions={filteredTransactions}
+              transactions={filteredTransactions.slice(0, 5)}
               onEdit={handleEdit}
               onDelete={handleDelete}
             />
+
+            {filteredTransactions.length > 5 && (
+              <div className="view-all-wrapper">
+                <button className="view-all-btn" onClick={() => window.location.href = '/add-transaction'}>
+                  View All Transactions
+                </button>
+              </div>
+            )}
           </>
         )}
       </div>

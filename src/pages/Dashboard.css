@@ -6,10 +6,182 @@
   position: relative;
 }
 
+/* Floating background decorations */
+.dash-decor {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.dash-orbit {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  opacity: 0.18;
+}
+.dash-orbit.o1 {
+  width: 280px;
+  height: 280px;
+  top: -80px;
+  right: -60px;
+  animation: orbitSpin 30s linear infinite;
+}
+.dash-orbit.o2 {
+  width: 180px;
+  height: 180px;
+  top: -40px;
+  right: -10px;
+  animation: orbitSpin 20s linear infinite reverse;
+}
+.dash-orbit.o3 {
+  width: 200px;
+  height: 200px;
+  bottom: 120px;
+  left: -70px;
+  animation: orbitSpin 25s linear infinite;
+}
+
+/* Orbit dot (travels on orbit) */
+.dash-orbit::after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: var(--primary);
+  border-radius: 50%;
+  top: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.45;
+}
+
+.dash-orbit.o2::after { background: #3a9e8a; }
+.dash-orbit.o3::after { background: #d08c40; }
+
+/* Dot cluster */
+.dash-dot-grid {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  opacity: 0.08;
+  background-image: radial-gradient(circle, var(--text-secondary) 1.2px, transparent 1.2px);
+  background-size: 12px 12px;
+}
+.dash-dot-grid.dg1 { top: 60px; left: 10px; }
+.dash-dot-grid.dg2 { bottom: 200px; right: 20px; transform: rotate(15deg); }
+
+/* Scattered shapes */
+.dash-shape {
+  position: absolute;
+  opacity: 0.1;
+}
+.dash-shape.hex {
+  width: 32px;
+  height: 28px;
+  top: 180px;
+  right: 30px;
+  background: var(--primary);
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  animation: floatSlow 12s ease-in-out infinite;
+}
+.dash-shape.tri {
+  width: 0;
+  height: 0;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-bottom: 24px solid #3a9e8a;
+  bottom: 100px;
+  left: 40px;
+  animation: floatSlow 10s ease-in-out infinite 2s;
+}
+.dash-shape.circle-fill {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #d08c40;
+  top: 40%;
+  right: 8px;
+  animation: floatSlow 14s ease-in-out infinite 1s;
+}
+.dash-shape.plus-mark {
+  top: 70%;
+  left: 20px;
+  width: 20px;
+  height: 20px;
+}
+.dash-shape.plus-mark::before,
+.dash-shape.plus-mark::after {
+  content: "";
+  position: absolute;
+  background: var(--primary);
+  border-radius: 1px;
+}
+.dash-shape.plus-mark::before {
+  width: 20px;
+  height: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.dash-shape.plus-mark::after {
+  width: 2px;
+  height: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Curved dashed line */
+.dash-curve {
+  position: absolute;
+  width: 160px;
+  height: 80px;
+  border: 1.5px dashed var(--border-color);
+  border-bottom: none;
+  border-radius: 160px 160px 0 0;
+  opacity: 0.12;
+  bottom: 60px;
+  right: 15%;
+}
+
+/* Wave line */
+.dash-wave {
+  position: absolute;
+  width: 120px;
+  height: 30px;
+  opacity: 0.08;
+  top: 50%;
+  left: -10px;
+}
+.dash-wave::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle 8px at 15px 15px, transparent 6px, var(--text-secondary) 6px, var(--text-secondary) 7px, transparent 7px),
+    radial-gradient(circle 8px at 35px 15px, transparent 6px, var(--text-secondary) 6px, var(--text-secondary) 7px, transparent 7px),
+    radial-gradient(circle 8px at 55px 15px, transparent 6px, var(--text-secondary) 6px, var(--text-secondary) 7px, transparent 7px);
+  background-repeat: no-repeat;
+}
+
+@keyframes orbitSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
 /* Header with animated greeting */
 .dashboard-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
   margin-bottom: 2rem;
   animation: fadeInUp 0.4s ease both;
+  position: relative;
+  z-index: 1;
 }
 .dashboard-title {
   font-size: 1.85rem;
@@ -57,7 +229,7 @@
   width: 58px;
   height: 58px;
   border-radius: 16px;
-  background: linear-gradient(135deg, #10b981, #059669);
+  background: #3a9e8a;
   color: #fff;
   border: none;
   cursor: pointer;
@@ -65,7 +237,7 @@
   align-items: center;
   justify-content: center;
   font-size: 1.5rem;
-  box-shadow: 0 8px 30px rgba(16, 185, 129, 0.35);
+  box-shadow: 0 8px 30px rgba(58, 158, 138, 0.3);
   transition: var(--transition-spring);
   z-index: 150;
   padding: 0;
@@ -74,13 +246,13 @@
 .fab::after { display: none; }
 
 @keyframes fabPulse {
-  0%, 100% { box-shadow: 0 8px 30px rgba(16, 185, 129, 0.35), 0 0 0 0 rgba(16, 185, 129, 0.3); }
-  50% { box-shadow: 0 8px 30px rgba(16, 185, 129, 0.35), 0 0 0 10px rgba(16, 185, 129, 0); }
+  0%, 100% { box-shadow: 0 8px 30px rgba(58, 158, 138, 0.3), 0 0 0 0 rgba(58, 158, 138, 0.25); }
+  50% { box-shadow: 0 8px 30px rgba(58, 158, 138, 0.3), 0 0 0 10px rgba(58, 158, 138, 0); }
 }
 
 .fab:hover {
   transform: scale(1.1) rotate(90deg);
-  box-shadow: 0 12px 40px rgba(16, 185, 129, 0.45);
+  box-shadow: 0 12px 40px rgba(58, 158, 138, 0.4);
 }
 
 /* Loading state */
@@ -131,4 +303,60 @@
   .section-header h2 { font-size: 1.05rem; }
   .transaction-count { font-size: 0.75rem; padding: 0.25rem 0.65rem; }
   .fab { bottom: 1.25rem; right: 1.25rem; width: 50px; height: 50px; font-size: 1.3rem; border-radius: 14px; }
+}
+
+/* View All Button */
+.view-all-wrapper {
+  text-align: center;
+  margin-top: 1.25rem;
+}
+.view-all-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.75rem;
+  border: 2px solid var(--primary);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: var(--transition);
+}
+.view-all-btn::after { display: none; }
+.view-all-btn:hover {
+  background: var(--primary);
+  color: #fff;
+  box-shadow: 0 4px 20px var(--primary-glow);
+  transform: translateY(-2px);
+}
+
+/* Seed Data Button */
+.seed-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border: 2px solid var(--accent);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+.seed-btn::after { display: none; }
+.seed-btn:hover {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(208, 140, 64, 0.25);
+  transform: translateY(-2px);
+}
+.seed-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
 }

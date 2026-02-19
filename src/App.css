@@ -51,18 +51,15 @@
 .text-muted { color: var(--text-secondary); }
 .text-center { text-align: center; }
 
-/* Gradient text utility */
+/* Accent text utility */
 .gradient-text {
-  background: linear-gradient(135deg, var(--primary), var(--accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--primary);
 }
 
 /* Button variants */
-.btn-success { background: linear-gradient(135deg, var(--success), #059669); }
+.btn-success { background: var(--success); }
 .btn-success:hover { box-shadow: 0 8px 25px var(--success-glow); }
-.btn-danger { background: linear-gradient(135deg, var(--danger), #dc2626); }
+.btn-danger { background: var(--danger); }
 .btn-danger:hover { box-shadow: 0 8px 25px var(--danger-glow); }
 .btn-outline {
   background: transparent;

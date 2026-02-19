@@ -1,9 +1,4 @@
-// ==============================
-// Navbar — Top Navigation Bar
-// ==============================
-// Contains logo, nav links, dark/light toggle, and user profile.
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useTheme } from "../../context/ThemeContext";
 import { useAuth } from "../../context/AuthContext";
@@ -15,6 +10,7 @@ import {
   FiHome,
   FiPlusCircle,
   FiLogOut,
+  FiChevronDown,
 } from "react-icons/fi";
 import finTrackLogo from "../../assets/finTracklogo (2).png";
 import "./Navbar.css";
@@ -23,12 +19,24 @@ export default function Navbar() {
   const { darkMode, toggleTheme } = useTheme();
   const { currentUser, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
   const isActive = (path) => location.pathname === path;
 
-  // Get user initials for avatar
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    setMenuOpen(false);
+    setUserMenuOpen(false);
+  }, [location.pathname]);
+
   const getInitials = () => {
     if (!currentUser) return "U";
     const name = currentUser.displayName || currentUser.email || "User";
@@ -38,6 +46,11 @@ export default function Navbar() {
       .join("")
       .toUpperCase()
       .slice(0, 2);
+  };
+
+  const getUserEmail = () => {
+    if (!currentUser) return "";
+    return currentUser.email || "";
   };
 
   const handleLogout = async () => {
@@ -50,15 +63,15 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="navbar">
+    <nav className={`navbar ${scrolled ? "navbar-scrolled" : ""}`}>
       <div className="navbar-inner">
-        {/* Logo */}
         <Link to="/dashboard" className="navbar-logo">
-          <img src={finTrackLogo} alt="FinTrack" className="logo-img" />
-          <span className="logo-text">FinTrack</span>
+          <div className="logo-container">
+            <img src={finTrackLogo} alt="BudgetBuddy" className="logo-img" />
+          </div>
+          <span className="logo-text">BudgetBuddy</span>
         </Link>
 
-        {/* Desktop Nav Links */}
         <div className={`navbar-links ${menuOpen ? "open" : ""}`}>
           <Link
             to="/dashboard"
@@ -78,34 +91,52 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Right Actions */}
         <div className="navbar-actions">
-          {/* Theme Toggle */}
           <button
             className="icon-btn theme-toggle"
             onClick={toggleTheme}
             title={darkMode ? "Light Mode" : "Dark Mode"}
           >
-            {darkMode ? <FiSun /> : <FiMoon />}
+            <span className={`theme-icon ${darkMode ? "rotate-in" : ""}`}>
+              {darkMode ? <FiSun /> : <FiMoon />}
+            </span>
           </button>
 
-          {/* User Avatar with dropdown */}
-          <div className="user-section">
-            <div className="user-avatar" title={currentUser?.displayName || currentUser?.email || "User"}>
+          <div className="user-section" onClick={() => setUserMenuOpen(!userMenuOpen)}>
+            <div className="user-avatar" title={getUserEmail()}>
               {currentUser?.photoURL ? (
                 <img src={currentUser.photoURL} alt="" className="avatar-img" />
               ) : (
                 <span>{getInitials()}</span>
               )}
+              <span className="avatar-status" />
             </div>
+            <FiChevronDown className={`user-chevron ${userMenuOpen ? "open" : ""}`} />
+
+            {userMenuOpen && (
+              <div className="user-dropdown">
+                <div className="dropdown-header">
+                  <div className="dropdown-avatar">
+                    {currentUser?.photoURL ? (
+                      <img src={currentUser.photoURL} alt="" />
+                    ) : (
+                      <span>{getInitials()}</span>
+                    )}
+                  </div>
+                  <div className="dropdown-info">
+                    <span className="dropdown-name">{currentUser?.displayName || "User"}</span>
+                    <span className="dropdown-email">{getUserEmail()}</span>
+                  </div>
+                </div>
+                <div className="dropdown-divider" />
+                <button className="dropdown-item logout" onClick={handleLogout}>
+                  <FiLogOut />
+                  <span>Sign Out</span>
+                </button>
+              </div>
+            )}
           </div>
 
-          {/* Logout */}
-          <button className="icon-btn logout-btn" onClick={handleLogout} title="Logout">
-            <FiLogOut />
-          </button>
-
-          {/* Mobile Menu Toggle */}
           <button className="icon-btn menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
             {menuOpen ? <FiX /> : <FiMenu />}
           </button>

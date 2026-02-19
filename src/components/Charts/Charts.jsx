@@ -33,10 +33,10 @@ function useIsMobile(breakpoint = 768) {
   return isMobile;
 }
 
-// Vibrant color palette
+// Warm, handpicked color palette
 const COLORS = [
-  "#6366f1", "#10b981", "#f59e0b", "#ef4444", "#ec4899",
-  "#8b5cf6", "#14b8a6", "#f97316", "#06b6d4", "#84cc16",
+  "#4a6fa5", "#3a9e8a", "#d08c40", "#c8574f", "#b07ab0",
+  "#7a8cc2", "#5bbfa8", "#d9a05c", "#5b9ab5", "#8fa858",
 ];
 
 export default function Charts({ transactions }) {
@@ -142,7 +142,7 @@ export default function Charts({ transactions }) {
               <path
                 d="M 10 70 A 50 50 0 0 1 110 70"
                 fill="none"
-                stroke={savingsRate >= 0 ? "#10b981" : "#ef4444"}
+                stroke={savingsRate >= 0 ? "#3a9e8a" : "#c8574f"}
                 strokeWidth="10"
                 strokeLinecap="round"
                 strokeDasharray={`${Math.min(Math.abs(savingsRate), 100) * 1.57} 157`}
@@ -236,8 +236,8 @@ export default function Charts({ transactions }) {
                     </span>
                   )}
                 />
-                <Bar dataKey="income" fill="#10b981" radius={[6, 6, 0, 0]} />
-                <Bar dataKey="expense" fill="#ef4444" radius={[6, 6, 0, 0]} />
+                <Bar dataKey="income" fill="#3a9e8a" radius={[6, 6, 0, 0]} />
+                <Bar dataKey="expense" fill="#c8574f" radius={[6, 6, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -250,12 +250,6 @@ export default function Charts({ transactions }) {
           <h3 className="chart-title">Spending Trend</h3>
           <ResponsiveContainer width="100%" height={isMobile ? 160 : 200}>
             <AreaChart data={areaData}>
-              <defs>
-                <linearGradient id="spendGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stopColor="#8b5cf6" stopOpacity={0.3} />
-                  <stop offset="100%" stopColor="#8b5cf6" stopOpacity={0} />
-                </linearGradient>
-              </defs>
               <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
               <XAxis dataKey="day" tick={{ fill: textColor, fontSize: 11 }} />
               <YAxis tick={{ fill: textColor, fontSize: 11 }} />
@@ -264,9 +258,9 @@ export default function Charts({ transactions }) {
                 type="monotone"
                 dataKey="amount"
                 name="Spending"
-                stroke="#8b5cf6"
+                stroke="#d08c40"
                 strokeWidth={2.5}
-                fill="url(#spendGradient)"
+                fill="rgba(208, 140, 64, 0.15)"
               />
             </AreaChart>
           </ResponsiveContainer>

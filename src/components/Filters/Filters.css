@@ -1,60 +1,62 @@
 /* ==============================
-   Filters.css — Premium Filter Controls
+   Filters.css — Filter Bar Controls
    ============================== */
 
-.filters-container {
+.filter-bar {
   display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
   animation: fadeInUp 0.5s ease both;
   animation-delay: 0.4s;
 }
 
 /* Search Box */
-.search-box {
+.fb-search {
   position: relative;
   display: flex;
   align-items: center;
+  flex: 1;
+  min-width: 180px;
 }
-.search-icon {
+.fb-search-icon {
   position: absolute;
-  left: 16px;
+  left: 14px;
   color: var(--text-secondary);
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   pointer-events: none;
   transition: var(--transition);
 }
-.search-box:focus-within .search-icon {
+.fb-search:focus-within .fb-search-icon {
   color: var(--primary);
 }
 
-.search-box input {
+.fb-search input {
   width: 100%;
-  padding: 0.85rem 2.75rem 0.85rem 3rem;
+  padding: 0.7rem 2.5rem 0.7rem 2.6rem;
   border: 2px solid var(--border-color);
-  border-radius: 16px;
-  font-size: 0.95rem;
-  background: var(--card-bg);
-  backdrop-filter: blur(12px);
+  border-radius: 14px;
+  font-size: 0.9rem;
+  background: transparent;
   color: var(--text-primary);
   transition: var(--transition);
 }
-.search-box input:focus {
+.fb-search input:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 4px var(--primary-glow), var(--shadow-md);
+  box-shadow: 0 0 0 4px var(--primary-glow);
 }
-.search-box input::placeholder {
+.fb-search input::placeholder {
   color: var(--text-secondary);
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
-.clear-search {
+.fb-clear-input {
   position: absolute;
-  right: 10px;
-  width: 30px;
-  height: 30px;
-  border-radius: 10px;
+  right: 8px;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
   border: none;
   background: transparent;
   color: var(--text-secondary);
@@ -65,106 +67,98 @@
   padding: 0;
   transition: var(--transition);
 }
-.clear-search:hover {
-  background: var(--danger-glow);
-  color: #ef4444;
+.fb-clear-input:hover {
+  background: rgba(200, 87, 79, 0.12);
+  color: #c8574f;
   transform: scale(1.1);
   box-shadow: none;
 }
-.clear-search::after { display: none; }
-
-/* Filter controls row */
-.filter-controls {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
+.fb-clear-input::after { display: none; }
 
 /* Type pills */
-.filter-pills {
+.fb-pills {
   display: flex;
-  background: var(--card-bg);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--glass-border);
-  border-radius: 14px;
-  padding: 4px;
-  gap: 4px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 3px;
+  gap: 3px;
 }
 
-.pill {
-  padding: 0.5rem 1.15rem;
+.fb-pill {
+  padding: 0.45rem 1rem;
   border: none;
-  border-radius: 11px;
-  font-size: 0.85rem;
+  border-radius: 9px;
+  font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
   transition: var(--transition);
   background: transparent;
   color: var(--text-secondary);
-  position: relative;
-  overflow: hidden;
 }
-.pill::after { display: none; }
-.pill:hover {
+.fb-pill::after { display: none; }
+.fb-pill:hover {
   transform: none;
   box-shadow: none;
   color: var(--text-primary);
-  background: rgba(99, 102, 241, 0.06);
+  background: rgba(74, 111, 165, 0.06);
 }
-.pill.active {
+.fb-pill.active {
   color: #fff;
   font-weight: 700;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
-.pill.active.all { background: linear-gradient(135deg, var(--primary), var(--accent)); }
-.pill.active.income { background: linear-gradient(135deg, #10b981, #34d399); }
-.pill.active.expense { background: linear-gradient(135deg, #ef4444, #f87171); }
+.fb-pill.active.all { background: #4a6fa5; }
+.fb-pill.active.income { background: #3a9e8a; }
+.fb-pill.active.expense { background: #c8574f; }
 
 /* Select dropdowns */
-.filter-select {
+.fb-select {
   padding: 0.55rem 0.85rem;
   border: 2px solid var(--border-color);
   border-radius: 12px;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 500;
-  background: var(--card-bg);
-  backdrop-filter: blur(10px);
+  background: transparent;
   color: var(--text-primary);
   cursor: pointer;
   transition: var(--transition);
-  min-width: 150px;
+  min-width: 140px;
 }
-.filter-select:focus {
+.fb-select:focus {
   border-color: var(--primary);
   box-shadow: 0 0 0 4px var(--primary-glow);
 }
 
 /* Clear filters button */
-.clear-filters {
+.fb-clear {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.5rem 1rem;
-  border: none;
+  padding: 0.45rem 0.95rem;
+  border: 1px solid #c8574f;
   border-radius: 10px;
-  background: var(--danger-glow);
-  color: #ef4444;
-  font-size: 0.85rem;
+  background: transparent;
+  color: #c8574f;
+  font-size: 0.82rem;
   font-weight: 600;
   cursor: pointer;
   transition: var(--transition);
 }
-.clear-filters:hover {
-  background: rgba(239, 68, 68, 0.25);
+.fb-clear:hover {
+  background: rgba(200, 87, 79, 0.12);
   transform: none;
   box-shadow: none;
 }
-.clear-filters::after { display: none; }
+.fb-clear::after { display: none; }
 
-@media (max-width: 600px) {
-  .filter-controls { flex-direction: column; align-items: stretch; }
-  .filter-pills { width: 100%; }
-  .pill { flex: 1; text-align: center; }
-  .filter-select { width: 100%; min-width: unset; }
+/* Responsive */
+@media (max-width: 700px) {
+  .filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .fb-search { min-width: unset; }
+  .fb-pills { width: 100%; }
+  .fb-pill { flex: 1; text-align: center; }
+  .fb-select { width: 100%; min-width: unset; }
 }

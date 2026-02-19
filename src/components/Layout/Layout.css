@@ -6,6 +6,97 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  position: relative;
+}
+
+/* Ambient background shapes on the whole layout */
+.layout-bg-decor {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* Large orbiting ring — top left */
+.bg-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  opacity: 0.08;
+}
+.bg-ring.br1 {
+  width: 400px;
+  height: 400px;
+  top: -120px;
+  left: -140px;
+  animation: bgOrbit 40s linear infinite;
+}
+.bg-ring.br2 {
+  width: 300px;
+  height: 300px;
+  bottom: -80px;
+  right: -100px;
+  animation: bgOrbit 35s linear infinite reverse;
+}
+.bg-ring.br3 {
+  width: 180px;
+  height: 180px;
+  top: 40%;
+  right: -50px;
+  animation: bgOrbit 28s linear infinite;
+}
+
+/* Ambient blobs */
+.bg-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.035;
+}
+.bg-blob.bb1 {
+  width: 300px;
+  height: 300px;
+  background: var(--primary);
+  top: 10%;
+  left: -60px;
+}
+.bg-blob.bb2 {
+  width: 250px;
+  height: 250px;
+  background: #3a9e8a;
+  bottom: 15%;
+  right: -40px;
+}
+
+/* Diagonal dashed accent line */
+.bg-dash-line {
+  position: absolute;
+  width: 1px;
+  height: 120vh;
+  opacity: 0.04;
+  background: repeating-linear-gradient(
+    to bottom,
+    var(--text-secondary) 0px,
+    var(--text-secondary) 6px,
+    transparent 6px,
+    transparent 12px
+  );
+}
+.bg-dash-line.bdl1 {
+  top: -10%;
+  left: 12%;
+  transform: rotate(15deg);
+}
+.bg-dash-line.bdl2 {
+  top: -10%;
+  right: 18%;
+  transform: rotate(-12deg);
+}
+
+@keyframes bgOrbit {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .main-content {
@@ -13,9 +104,11 @@
   padding-top: 2rem;
   padding-bottom: 6rem;
   animation: fadeInUp 0.5s ease both;
+  position: relative;
+  z-index: 1;
 }
 
-/* Content container — visible bounded area */
+/* Content container */
 .page-wrapper {
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
@@ -24,6 +117,34 @@
   -webkit-backdrop-filter: blur(12px);
   padding: 2rem 2.25rem;
   box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Corner arc decorations on page wrapper */
+.page-wrapper::before {
+  content: "";
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 50%;
+  top: -60px;
+  right: -60px;
+  opacity: 0.12;
+  pointer-events: none;
+}
+.page-wrapper::after {
+  content: "";
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 50%;
+  bottom: -40px;
+  left: -40px;
+  opacity: 0.1;
+  pointer-events: none;
 }
 
 @media (max-width: 768px) {
@@ -35,4 +156,5 @@
     padding: 1.25rem 1rem;
     border-radius: 16px;
   }
+  .layout-bg-decor { display: none; }
 }
