@@ -1,8 +1,3 @@
-// ==============================
-// DashboardLayout — Wrapper with Navbar
-// ==============================
-// Wraps pages with the Navbar and provides consistent padding.
-
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import "./Layout.css";

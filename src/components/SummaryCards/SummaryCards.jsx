@@ -1,8 +1,3 @@
-// ==============================
-// SummaryCards — Balance, Income, Expense
-// ==============================
-// Displays three cards with minimal geometric line/shape accents.
-
 import { FiTrendingUp, FiTrendingDown, FiDollarSign, FiArrowUpRight, FiArrowDownRight } from "react-icons/fi";
 import "./SummaryCards.css";
 

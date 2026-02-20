@@ -1,9 +1,3 @@
-// ==============================
-// Charts — Pie & Bar Charts for Analytics
-// ==============================
-// Visualizes spending patterns using Recharts.
-// Pie chart: category breakdown. Bar chart: monthly trends.
-
 import { useState, useEffect } from "react";
 import {
   PieChart,
@@ -33,7 +27,6 @@ function useIsMobile(breakpoint = 768) {
   return isMobile;
 }
 
-// Warm, handpicked color palette
 const COLORS = [
   "#4a6fa5", "#3a9e8a", "#d08c40", "#c8574f", "#b07ab0",
   "#7a8cc2", "#5bbfa8", "#d9a05c", "#5b9ab5", "#8fa858",
@@ -53,7 +46,6 @@ export default function Charts({ transactions }) {
 
   const savingsRate = income > 0 ? Math.round(((income - expense) / income) * 100) : 0;
 
-  // --- Pie Chart Data: Category breakdown for expenses ---
   const expenseByCategory = transactions
     .filter((t) => t.type === "expense")
     .reduce((acc, t) => {
@@ -65,10 +57,8 @@ export default function Charts({ transactions }) {
     .map(([name, value]) => ({ name, value }))
     .sort((a, b) => b.value - a.value);
 
-  // Top 3 expense categories
   const topCategories = pieData.slice(0, 3);
 
-  // --- Bar Chart Data: Monthly income vs expense ---
   const monthlyData = transactions.reduce((acc, t) => {
     const d = new Date(t.date);
     const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
@@ -83,7 +73,6 @@ export default function Charts({ transactions }) {
     .map(([, v]) => v)
     .slice(-6);
 
-  // --- Area Chart Data: Daily spending trend (last 30 days) ---
   const dailySpending = transactions
     .filter((t) => t.type === "expense")
     .reduce((acc, t) => {
@@ -106,7 +95,6 @@ export default function Charts({ transactions }) {
   const textColor = darkMode ? "#9ca3af" : "#6b7280";
   const gridColor = darkMode ? "#374151" : "#e5e7eb";
 
-  // Custom tooltip
   const CustomTooltip = ({ active, payload, label }) => {
     if (!active || !payload) return null;
     return (

@@ -1,20 +1,10 @@
-// ==============================
-// App.jsx — Root Component
-// ==============================
-// Route definitions, global context providers, and toast notifications.
-
 import { Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-// Context Providers
 import { ThemeProvider } from "./context/ThemeContext";
 import { AuthProvider } from "./context/AuthContext";
-
-// Auth
 import PrivateRoute from "./components/Auth/PrivateRoute";
-
-// Pages
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import AddTransaction from "./pages/AddTransaction";
@@ -24,7 +14,6 @@ function App() {
   return (
     <AuthProvider>
       <ThemeProvider>
-        {/* Toast Notifications */}
         <ToastContainer
           position="top-right"
           autoClose={3000}
@@ -32,13 +21,10 @@ function App() {
           theme="colored"
         />
 
-        {/* App Routes */}
         <Routes>
-          {/* Public Routes */}
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
 
-          {/* Protected Routes */}
           <Route
             path="/dashboard"
             element={
@@ -56,7 +42,6 @@ function App() {
             }
           />
 
-          {/* Redirect unknown to home */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </ThemeProvider>

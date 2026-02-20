@@ -1,9 +1,3 @@
-// ==============================
-// PrivateRoute — Protected Route Wrapper
-// ==============================
-// Redirects unauthenticated users to the login page.
-// Shows a loading spinner while checking auth state.
-
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 

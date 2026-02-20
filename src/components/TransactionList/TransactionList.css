@@ -1,15 +1,10 @@
-/* ==============================
-   TransactionList.css — Transaction Rows
-   ============================== */
 
-/* List container */
 .tl-list {
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
 }
 
-/* Each transaction row */
 .tl-row {
   display: flex;
   align-items: center;
@@ -24,7 +19,6 @@
   animation: fadeInUp 0.4s ease both;
 }
 
-/* Stagger animation */
 .tl-row:nth-child(1) { animation-delay: 0.05s; }
 .tl-row:nth-child(2) { animation-delay: 0.1s; }
 .tl-row:nth-child(3) { animation-delay: 0.15s; }
@@ -88,7 +82,6 @@
   border: 2px solid #ef4444;
 }
 
-/* Info section */
 .tl-info {
   flex: 1;
   min-width: 0;
@@ -96,6 +89,7 @@
   flex-direction: column;
   gap: 0.2rem;
 }
+
 .tl-title {
   font-size: 0.95rem;
   font-weight: 600;
@@ -105,6 +99,7 @@
   text-overflow: ellipsis;
   display: block;
 }
+
 .tl-meta {
   display: flex;
   align-items: center;
@@ -112,6 +107,7 @@
   font-size: 0.78rem;
   color: var(--text-secondary);
 }
+
 .tl-cat {
   font-weight: 600;
   border: 1px solid var(--border-color);

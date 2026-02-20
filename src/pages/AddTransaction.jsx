@@ -1,9 +1,3 @@
-// ==============================
-// AddTransaction Page — Standalone Form Page
-// ==============================
-// Full-page version of the transaction form for the
-// /add-transaction route. Saves transaction to Realtime Database then navigates back.
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -39,7 +33,6 @@ export default function AddTransaction() {
 
   const userCollectionPath = `users/${currentUser?.uid}/transactions`;
 
-  // ---- Firestore real-time listener ----
   useEffect(() => {
     if (!currentUser) return;
     const q = query(
@@ -143,7 +136,6 @@ export default function AddTransaction() {
           <p className="form-subtitle">{editingId ? "Update the details below" : "Record your income or expense"}</p>
 
           <form className="add-form" onSubmit={handleSubmit}>
-            {/* Type Toggle */}
             <div className="type-toggle-full">
               <button
                 type="button"

@@ -60,7 +60,6 @@ export default function Home() {
 
   return (
     <div className="home-page">
-      {/* Navigation */}
       <nav className="home-nav">
         <div className="home-nav-inner">
           <Link to="/" className="home-logo">
@@ -86,7 +85,6 @@ export default function Home() {
         </div>
       </nav>
 
-      {/* Hero Section */}
       <section className="hero">
         <div className="hero-bg">
           <div className="hero-gradient-orb orb-1" />
@@ -136,12 +134,11 @@ export default function Home() {
               <span className="trust-avatar trust-avatar-count">+2K</span>
             </div>
             <p className="trust-text">
-              Trusted by <strong>2,000+</strong> users to manage their finances
+              Trusted by <strong></strong> users to manage their finances
             </p>
           </div>
         </div>
 
-        {/* Hero Visual Card */}
         <div className="hero-visual">
           <div className="hero-card-stack">
             <div className="hero-mock-card mock-balance">
@@ -183,7 +180,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Features Section */}
       <section className="features-section" id="features">
         <div className="features-inner">
           <div className="section-label">
@@ -210,7 +206,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
       <section className="cta-section">
         <div className="cta-inner">
           <div className="cta-glow" />
@@ -229,7 +224,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Footer */}
       <footer className="home-footer">
         <div className="home-footer-inner">
           <div className="footer-top">

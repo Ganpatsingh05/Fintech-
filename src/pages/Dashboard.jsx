@@ -1,17 +1,9 @@
-// ==============================
-// Dashboard Page — Main Finance Dashboard
-// ==============================
-// Combines SummaryCards, Charts, Filters, TransactionList,
-// TransactionForm (modal), and a floating add button.
-// Uses Firebase Realtime Database for persistent data storage.
-
 import { useState, useMemo, useEffect } from "react";
 import { toast } from "react-toastify";
 import { collection, addDoc, doc, updateDoc, deleteDoc, onSnapshot, query, orderBy } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
 import { useAuth } from "../context/AuthContext";
 
-// Components
 import DashboardLayout from "../components/Layout/DashboardLayout";
 import SummaryCards from "../components/SummaryCards/SummaryCards";
 import Charts from "../components/Charts/Charts";
@@ -36,10 +28,8 @@ export default function Dashboard() {
     sortBy: "date-desc",
   });
 
-  // User-specific Firestore collection
   const userCollectionPath = `users/${currentUser?.uid}/transactions`;
 
-  // ---- Firestore real-time listener ----
   useEffect(() => {
     if (!currentUser) return;
     const q = query(
@@ -48,7 +38,6 @@ export default function Dashboard() {
     );
     const unsubscribe = onSnapshot(q, (snapshot) => {
       const list = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      // Sort by date descending
       list.sort((a, b) => new Date(b.date) - new Date(a.date));
       setTransactions(list);
       setLoading(false);
@@ -56,7 +45,6 @@ export default function Dashboard() {
     return () => unsubscribe();
   }, [currentUser, userCollectionPath]);
 
-  // ---- Add Transaction ----
   const handleAdd = async (formData) => {
     try {
       await addDoc(collection(db, userCollectionPath), {
@@ -71,7 +59,6 @@ export default function Dashboard() {
     }
   };
 
-  // ---- Edit Transaction ----
   const handleEdit = (transaction) => {
     setEditData(transaction);
     setFormOpen(true);
@@ -90,7 +77,6 @@ export default function Dashboard() {
     }
   };
 
-  // ---- Delete Transaction ----
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this transaction?")) return;
     try {
@@ -103,7 +89,6 @@ export default function Dashboard() {
     }
   };
 
-  // ---- Seed Mock Data ----
   const [seeding, setSeeding] = useState(false);
   const handleSeedData = async () => {
     if (!currentUser) return;
@@ -120,11 +105,9 @@ export default function Dashboard() {
     }
   };
 
-  // ---- Filter & Sort Logic ----
   const filteredTransactions = useMemo(() => {
     let result = [...transactions];
 
-    // Search
     if (filters.search) {
       const q = filters.search.toLowerCase();
       result = result.filter(
@@ -135,17 +118,14 @@ export default function Dashboard() {
       );
     }
 
-    // Type filter
     if (filters.type !== "all") {
       result = result.filter((t) => t.type === filters.type);
     }
 
-    // Category filter
     if (filters.category !== "All") {
       result = result.filter((t) => t.category === filters.category);
     }
 
-    // Sort
     const [sortField, sortDir] = filters.sortBy.split("-");
     result.sort((a, b) => {
       if (sortField === "date") {
@@ -161,7 +141,6 @@ export default function Dashboard() {
 
   const floatingContent = !loading && (
     <>
-      {/* Floating Add Button */}
       <button
         className="fab"
         onClick={() => {
@@ -173,7 +152,6 @@ export default function Dashboard() {
         <FiPlus />
       </button>
 
-      {/* Transaction Form Modal */}
       <TransactionForm
         isOpen={formOpen}
         onClose={() => {
@@ -227,13 +205,10 @@ export default function Dashboard() {
           </div>
         ) : (
           <>
-            {/* Summary Cards */}
             <SummaryCards transactions={transactions} />
 
-            {/* Charts */}
             <Charts transactions={transactions} />
 
-            {/* Filters */}
             <div className="section-header">
               <h2>Recent Transactions</h2>
               <span className="transaction-count">
@@ -242,7 +217,6 @@ export default function Dashboard() {
             </div>
             <Filters filters={filters} setFilters={setFilters} />
 
-            {/* Recent Transaction List (max 5) */}
             <TransactionList
               transactions={filteredTransactions.slice(0, 5)}
               onEdit={handleEdit}

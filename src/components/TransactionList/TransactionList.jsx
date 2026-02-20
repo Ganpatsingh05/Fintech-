@@ -1,6 +1,3 @@
-// ==============================
-// TransactionList — Clean Row Layout
-// ==============================
 import {
   FiEdit2, FiTrash2, FiShoppingCart, FiTruck, FiHome, FiHeart,
   FiBook, FiFilm, FiZap, FiGlobe, FiBriefcase, FiGift,

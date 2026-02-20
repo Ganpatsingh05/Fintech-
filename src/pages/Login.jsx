@@ -66,21 +66,18 @@ export default function Login() {
 
   return (
     <div className="auth-page">
-      {/* Background */}
       <div className="auth-bg">
         <div className="auth-orb orb-a" />
         <div className="auth-orb orb-b" />
         <div className="auth-grid-bg" />
       </div>
 
-      {/* Back to home */}
       <Link to="/" className="auth-back-home">
         <FiArrowRight style={{ transform: "rotate(180deg)" }} />
         <span>Home</span>
       </Link>
 
       <div className="auth-container">
-        {/* Left brand panel */}
         <div className="auth-brand-panel">
           <div className="brand-content">
             <div className="brand-logo-mark">
@@ -110,10 +107,8 @@ export default function Login() {
           </div>
         </div>
 
-        {/* Auth Card */}
         <div className="auth-card">
           <div className="auth-card-inner">
-            {/* Logo for mobile */}
             <div className="auth-logo-mobile">
               <img src={logo} alt="BudgetBuddy" className="auth-logo-img" />
               <span>BudgetBuddy</span>
@@ -130,7 +125,6 @@ export default function Login() {
               </p>
             </div>
 
-            {/* Email Form */}
             <form className="auth-form" onSubmit={handleSubmit}>
               {isSignup && (
                 <div className={`auth-input-group ${focusedField === "name" ? "focused" : ""} ${name ? "has-value" : ""}`}>
