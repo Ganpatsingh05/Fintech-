@@ -83,8 +83,8 @@
 }
 .modal-close::after { display: none; }
 .modal-close:hover {
-  background: rgba(200, 87, 79, 0.12);
-  color: #c8574f;
+  background: rgba(239, 68, 68, 0.12);
+  color: #ef4444;
   transform: rotate(90deg);
   box-shadow: none;
 }
@@ -121,14 +121,14 @@
 .type-btn::after { display: none; }
 .type-btn:hover { transform: none; box-shadow: none; }
 .type-btn.active.income {
-  background: #3a9e8a;
+  background: #10b981;
   color: #fff;
-  box-shadow: 0 4px 15px rgba(58, 158, 138, 0.2);
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
 }
 .type-btn.active.expense {
-  background: #c8574f;
+  background: #ef4444;
   color: #fff;
-  box-shadow: 0 4px 15px rgba(200, 87, 79, 0.2);
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.2);
 }
 
 /* Form fields */
@@ -203,17 +203,17 @@
   font-size: 0.95rem;
 }
 .btn-submit.income {
-  background: #3a9e8a;
+  background: #10b981;
 }
 .btn-submit.income:hover {
-  box-shadow: 0 8px 25px rgba(58, 158, 138, 0.25);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.25);
   transform: translateY(-2px);
 }
 .btn-submit.expense {
-  background: #c8574f;
+  background: #ef4444;
 }
 .btn-submit.expense:hover {
-  box-shadow: 0 8px 25px rgba(200, 87, 79, 0.25);
+  box-shadow: 0 8px 25px rgba(239, 68, 68, 0.25);
   transform: translateY(-2px);
 }
 

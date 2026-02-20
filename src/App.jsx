@@ -15,6 +15,7 @@ import { AuthProvider } from "./context/AuthContext";
 import PrivateRoute from "./components/Auth/PrivateRoute";
 
 // Pages
+import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import AddTransaction from "./pages/AddTransaction";
 import Login from "./pages/Login";
@@ -34,6 +35,7 @@ function App() {
         {/* App Routes */}
         <Routes>
           {/* Public Routes */}
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
 
           {/* Protected Routes */}
@@ -54,9 +56,8 @@ function App() {
             }
           />
 
-          {/* Redirect root to dashboard */}
-          <Route path="/" element={<Navigate to="/dashboard" replace />} />
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          {/* Redirect unknown to home */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </ThemeProvider>
     </AuthProvider>

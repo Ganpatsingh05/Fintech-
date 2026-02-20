@@ -8,24 +8,24 @@
 
 /* ----- Theme Variables ----- */
 :root {
-  --primary: #4a6fa5;
-  --primary-hover: #3b5d8e;
-  --primary-glow: rgba(74, 111, 165, 0.22);
-  --accent: #d08c40;
-  --success: #3a9e8a;
-  --success-glow: rgba(58, 158, 138, 0.18);
-  --danger: #c8574f;
-  --danger-glow: rgba(200, 87, 79, 0.18);
-  --warning: #d08c40;
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --primary-glow: rgba(37, 99, 235, 0.18);
+  --accent: #3b82f6;
+  --success: #10b981;
+  --success-glow: rgba(16, 185, 129, 0.15);
+  --danger: #ef4444;
+  --danger-glow: rgba(239, 68, 68, 0.15);
+  --warning: #f59e0b;
 
-  --bg-color: #f5f2ed;
-  --bg-gradient: #f5f2ed;
-  --card-bg: rgba(255, 253, 250, 0.72);
-  --card-bg-solid: #fffdf9;
-  --glass-border: rgba(200, 190, 170, 0.35);
-  --text-primary: #2c2824;
-  --text-secondary: #7a7068;
-  --border-color: rgba(160, 148, 132, 0.22);
+  --bg-color: #f8fafc;
+  --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #eef2ff 50%, #f0f9ff 100%);
+  --card-bg: rgba(255, 255, 255, 0.82);
+  --card-bg-solid: #ffffff;
+  --glass-border: rgba(37, 99, 235, 0.08);
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --border-color: rgba(37, 99, 235, 0.1);
 
   --font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
 
@@ -43,18 +43,18 @@
 }
 
 .dark {
-  --bg-color: #171411;
-  --bg-gradient: #171411;
-  --card-bg: rgba(35, 31, 27, 0.7);
-  --card-bg-solid: #231f1b;
-  --glass-border: rgba(255, 245, 230, 0.07);
-  --text-primary: #ede8e2;
-  --text-secondary: #a09889;
-  --border-color: rgba(160, 148, 132, 0.12);
-  --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.5);
-  --shadow-glow: 0 0 40px rgba(74, 111, 165, 0.12);
+  --bg-color: #0b1121;
+  --bg-gradient: linear-gradient(135deg, #0b1121 0%, #0f1a2e 50%, #111827 100%);
+  --card-bg: rgba(15, 23, 42, 0.8);
+  --card-bg-solid: #1e293b;
+  --glass-border: rgba(59, 130, 246, 0.12);
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --border-color: rgba(59, 130, 246, 0.1);
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 30px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 40px rgba(59, 130, 246, 0.15);
 }
 
 *, *::before, *::after {
@@ -65,7 +65,8 @@
 
 body {
   font-family: var(--font-family);
-  background: var(--bg-gradient);
+  background: var(--bg-color);
+  background-image: var(--bg-gradient);
   background-attachment: fixed;
   color: var(--text-primary);
   line-height: 1.6;

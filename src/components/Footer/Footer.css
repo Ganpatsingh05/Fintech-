@@ -21,7 +21,7 @@
 }
 
 .footer-heart {
-  color: #c8574f;
+  color: #ef4444;
   font-size: 0.85rem;
   animation: heartbeat 1.5s ease-in-out infinite;
 }

@@ -47,10 +47,10 @@
   transition: var(--transition);
 }
 .tl-row:has(.tl-ico.income)::before {
-  background: #3a9e8a;
+  background: #10b981;
 }
 .tl-row:has(.tl-ico.expense)::before {
-  background: #c8574f;
+  background: #ef4444;
 }
 
 /* Hover */
@@ -80,12 +80,12 @@
   transform: scale(1.1) rotate(-5deg);
 }
 .tl-ico.income {
-  color: #3a9e8a;
-  border: 2px solid #3a9e8a;
+  color: #10b981;
+  border: 2px solid #10b981;
 }
 .tl-ico.expense {
-  color: #c8574f;
-  border: 2px solid #c8574f;
+  color: #ef4444;
+  border: 2px solid #ef4444;
 }
 
 /* Info section */
@@ -133,8 +133,8 @@
   flex-shrink: 0;
   white-space: nowrap;
 }
-.tl-amt.income { color: #3a9e8a; }
-.tl-amt.expense { color: #c8574f; }
+.tl-amt.income { color: #10b981; }
+.tl-amt.expense { color: #ef4444; }
 
 /* Action buttons */
 .tl-actions {
@@ -166,10 +166,10 @@
   transform: scale(1.1);
   box-shadow: none;
 }
-.tl-btn.del { color: #c8574f; }
+.tl-btn.del { color: #ef4444; }
 .tl-btn.del:hover {
-  background: rgba(200, 87, 79, 0.12);
-  border-color: #c8574f;
+  background: rgba(239, 68, 68, 0.12);
+  border-color: #ef4444;
   transform: scale(1.1);
   box-shadow: none;
 }

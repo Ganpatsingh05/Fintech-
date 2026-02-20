@@ -2,13 +2,15 @@
 // AuthContext — Firebase Authentication Provider
 // ==============================
 // Manages user authentication state using Firebase Auth.
-// Provides login, logout methods (email/password only).
+// Provides login, signup, and logout methods.
 
 import { createContext, useContext, useState, useEffect } from "react";
 import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
   signOut,
+  updateProfile,
 } from "firebase/auth";
 import { auth } from "../firebase/firebaseConfig";
 
@@ -34,6 +36,15 @@ export function AuthProvider({ children }) {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
+  // Sign up with email & password
+  const signup = async (email, password, displayName) => {
+    const result = await createUserWithEmailAndPassword(auth, email, password);
+    if (displayName) {
+      await updateProfile(result.user, { displayName });
+    }
+    return result;
+  };
+
   // Logout
   const logout = () => {
     return signOut(auth);
@@ -43,6 +54,7 @@ export function AuthProvider({ children }) {
     currentUser,
     loading,
     login,
+    signup,
     logout,
   };
 
